@@ -9,22 +9,29 @@ public class No_1874 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Stack<Integer> stack = new Stack<>();
         int n = Integer.parseInt(br.readLine());
-        int k = n;
+        int max = 0;
         ArrayList<String> result = new ArrayList<>();
-        for (int i=0; i<n; i++){
+        for (int i=1; i<=n; i++){
             int num = Integer.parseInt(br.readLine());
-            stack.push(num);
-            result.add("+");
-            if (num == k){
+            if (num > max) {
+                for (int j=max+1; j<=num; j++){
+                    stack.push(j);
+                    result.add("+");
+                }
+                max = num;
                 stack.pop();
-                k=-1;
                 result.add("-");
-                ArrayList<Integer> tmp_list = new ArrayList<>();
-                for (int j=0; j<stack.size(); j++){
-                    int pop_num = stack.pop();
-                    tmp_list.add(pop_num);
+            } else {
+                int pop_num = stack.pop();
+                if (pop_num > num){
+                    result.clear();
+                    result.add("NO");
+                    break;
+                } else {
+                    result.add("-");
                 }
             }
         }
+        result.stream().forEach(System.out::println);
     }
 }
